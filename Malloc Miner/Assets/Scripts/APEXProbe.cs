@@ -4,6 +4,7 @@ using UnityEngine;
 public class APEXProbe : MonoBehaviour
 {
     [Header("Probe Settings")]
+    [SerializeField] private APEXProbeScriptable scriptableAPEX;
     [SerializeField] private int id;
     [SerializeField] private string probeName;
     
@@ -15,6 +16,11 @@ public class APEXProbe : MonoBehaviour
 
     void Start()
     {
+        id = scriptableAPEX.id;
+        probeName = scriptableAPEX.probeName;
+        yieldAmount = scriptableAPEX.yieldAmount;
+        extractionInterval = scriptableAPEX.extractionInterval;
+
         StartCoroutine(ExtractResourcesRoutine());
     }
 

@@ -24,8 +24,12 @@ public class GameEvents : MonoBehaviour
     void Awake() => Instance = this;
 
     // Evento usando Generics para passar a struct de dados
+    // EVENTOS DE MINERAÇÃO
     public event Action<ResourceEventData> OnAddResource;
 
     public void AddResource(ResourceEventData data) => OnAddResource?.Invoke(data);
+
+    // EVENTOS DE MERCADO - UI
+    
     
 }
