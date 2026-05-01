@@ -16,3 +16,5 @@ MonoBehaviour:
   probeName: APEX-Mk01
   yieldAmount: 10
   extractionInterval: 10
+  description: "Unidade padr\xE3o. Gera 1 U/s."
+  value: 15

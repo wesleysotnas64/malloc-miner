@@ -7,4 +7,6 @@ public class APEXProbeScriptable : ScriptableObject
     public string probeName;
     public int yieldAmount;
     public float extractionInterval;
+    public string description;
+    public int value;
 }

@@ -10,9 +10,11 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: b64682ef41e8f2243bcd726783380316, type: 3}
-  m_Name: APEXProbeMK01 2
+  m_Name: APEXProbeRonin01
   m_EditorClassIdentifier: 
   id: 1
   probeName: APEX-Ronin01
   yieldAmount: 10
   extractionInterval: 5
+  description: "Refor\xE7ada com Broca Damasco. Gera 2 U/s."
+  value: 25
