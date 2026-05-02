@@ -31,8 +31,13 @@ public class MarketController : MonoBehaviour
             if (itemScript != null)
             {
                 // Chama o seu método SetItem
-                itemScript.SetItem(probe.probeName, probe.description, probe.value);
+                itemScript.SetItem(probe);
             }
         }
+    }
+
+    public void BuyItem()
+    {
+        
     }
 }

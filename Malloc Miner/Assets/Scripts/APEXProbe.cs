@@ -14,8 +14,9 @@ public class APEXProbe : MonoBehaviour
 
     public float ExtractionProgress { get; private set; }
 
-    void Start()
+    public void InitProbe(APEXProbeScriptable aPEXProbeScriptable)
     {
+        scriptableAPEX = aPEXProbeScriptable;
         id = scriptableAPEX.id;
         probeName = scriptableAPEX.probeName;
         yieldAmount = scriptableAPEX.yieldAmount;
@@ -38,10 +39,7 @@ public class APEXProbe : MonoBehaviour
             {
                 timer = 0.0f;
                 ExtractionProgress = 0.0f;
-
-                Debug.Log($"[APEX Probe - {probeName}]: {yieldAmount:N0} units extracted.");
                 
-                // O evento de adicionar minério ao GameManager entrará aqui
                 ResourceEventData data = new (id, probeName, yieldAmount, extractionInterval);
                 GameEvents.Instance.AddResource(data);
             }

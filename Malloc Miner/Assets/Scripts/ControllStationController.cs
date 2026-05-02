@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class ControllStationController : MonoBehaviour
 {
+    public static ControllStationController StationInstance;
+
     [Header("Resources Info")]
     [SerializeField] private long totalResources; // 'minerio' -> totalResources (long para suportar valores altos)
     [SerializeField] private float currentFlow;    // 'fluxoMineracao' -> currentFlow
@@ -20,33 +22,45 @@ public class ControllStationController : MonoBehaviour
     // Dicionário para rastrear a produção de cada sonda individualmente e calcular o fluxo total
     private Dictionary<int, float> probeProductionRates = new Dictionary<int, float>();
 
+    void Awake()
+    {
+        StationInstance = this;
+    }
+
     void Start()
     {
-        if (GameEvents.Instance != null) GameEvents.Instance.OnAddResource += HandleResourceReceived;
+        totalResources = 100;
+        
+        if (GameEvents.Instance != null)
+        {
+            GameEvents.Instance.OnAddResource += HandleResourceReceived;
+            GameEvents.Instance.OnBuyProbe += HandleRegisterNewProbe;
+        } 
 
         UpdatePanel();
     }
     private void OnDestroy()
     {
-        if (GameEvents.Instance != null) GameEvents.Instance.OnAddResource -= HandleResourceReceived;
+        if (GameEvents.Instance != null)
+        {
+            GameEvents.Instance.OnAddResource -= HandleResourceReceived;
+            GameEvents.Instance.OnBuyProbe -= HandleRegisterNewProbe;
+        } 
     }
 
     private void HandleResourceReceived(ResourceEventData data)
     {
-        // 1. Atualiza o montante total
         totalResources += data.amount;
-
-        // 2. Calcula a taxa de produção desta sonda específica (u/s)
-        // Se a sonda envia 10 minérios a cada 2 segundos, ela contribui com 5 u/s.
         float ratePerSecond = data.amount / data.interval;
-        
-        // Armazena ou atualiza a taxa no dicionário usando o ID da sonda
         probeProductionRates[data.id] = ratePerSecond;
-
-        // 3. Recalcula o fluxo total da estação
         CalculateTotalFlow();
+        UpdatePanel();
+    }
 
-        // 4. Atualiza a interface
+    public void HandleRegisterNewProbe(APEXProbeScriptable data)
+    {
+        activeProbesCount++;
+        totalResources -= data.value;
         UpdatePanel();
     }
 
@@ -68,10 +82,8 @@ public class ControllStationController : MonoBehaviour
         textProbes.text = $"FIELD DATA: {activeProbesCount} / {totalAvailableSlots} [ACTIVE PROBES / TOTAL SLOTS]";
     }
 
-    // Método para ser chamado quando o jogador comprar/instanciar uma sonda
-    public void RegisterNewProbe()
+    public long GetTotalResources()
     {
-        activeProbesCount++;
-        UpdatePanel();
+        return totalResources;
     }
 }

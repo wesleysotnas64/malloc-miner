@@ -30,6 +30,7 @@ public class GameEvents : MonoBehaviour
     public void AddResource(ResourceEventData data) => OnAddResource?.Invoke(data);
 
     // EVENTOS DE MERCADO - UI
-    
+    public event Action<APEXProbeScriptable> OnBuyProbe;
+    public void BuyProbe(APEXProbeScriptable data) => OnBuyProbe?.Invoke(data);
     
 }
